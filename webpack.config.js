@@ -9,6 +9,11 @@ let conf =  {
     filename: 'main.js',
     publicPath: 'dist/'
   },
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './dist',
+    hot: true
+  },
   module: {
     rules: [
       {
@@ -40,10 +45,4 @@ let conf =  {
   ]
 };
 
-module.exports = (env, options) => {
-  let production = options.mode === 'production';
-  conf.devtool = production
-                  ? false
-                  : 'eval-sourcemap';
-  return conf;
-}
+module.exports = conf;
