@@ -21,20 +21,20 @@ const Admin = () => (
 class Root extends Component {
   render() {
     return (
-      <BrowserRouter history={history}>
-        <div>
-        <ul>
+<BrowserRouter history={history}>
+  <div>
+      <ul>
         <li><Link to="/">Main</Link></li>
         <li><Link to="/admin">List</Link></li>
-        </ul>
+      </ul>
 
         <hr/>
 
 
-           <Route exact path="/" component={Home} />
-           <Route path="/admin" component={Admin} />
-        </div>
-      </BrowserRouter>
+         <Route exact path="/" component={Home} />
+         <Route path="/admin" component={Admin} />
+   </div>
+</BrowserRouter>
     )
   }
 }

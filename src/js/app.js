@@ -1,57 +1,77 @@
 import React, { Component } from 'react';
-import Header from '../components/header';
-import TodoItem from '../components/todoitem';
 
-export default class App extends Component {
+export default class ToDo extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state= {
-      todos: [
-        {id: 0, text: "Something!"},
-        {id: 1, text: "Something!"},
-        {id: 3, text: "Something!"},
-        {id: 4, text: "Something!"},
-        {id: 5, text: "Something!"},
-        {id: 6, text: "Something!"},
-        {id: 7, text: "Something!"},
-        {id: 8, text: "Something!"},
-        {id: 9, text: "Something!"}
-      ],
-      nextId: 10
-    }
-
-    this.addTodo = this.addTodo.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
+  constructor() {
+    super();
+    this.state = {
+      works: [
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something'
+       ]
+    };
   }
 
-addTodo(todoText) {
-  let todos = this.state.todos.slice();
-  todos.push({id: this.state.nextId, text: todoText});
-  this.setState({
-    todos: todos,
-    nextId: ++this.state.nextId
-  })
-}
+  add() {
+    var title = this.refs.title.value;
+    if(localStorage.getItem('works') == null) {
+      var works= [
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something',
+         'Something'
+       ]
+      works.push(title);
+      localStorage.setItem('works', JSON.stringify(works));
+    } else {
+      var works = JSON.parse(localStorage.getItem('works'))
+      works.push(title);
+      localStorage.setItem('works', JSON.stringify(works));
+    }
+    this.setState({
+      works: JSON.parse(localStorage.getItem('works'))
+    });
+  }
 
-removeTodo(id) {
-  this.setState({
-    todos: this.state.todos.filter((todo, index) => todo.id !== id)
-  })
-}
-render() {
-    return (
-      <div>
-        <Header />
+  delete(e) {
+    var index = e.target.getAttribute('data-key');
+    var list = JSON.parse(localStorage.getItem('works'));
+    list.splice(index, 1);
+    this.setState({
+      works: list
+    });
+    localStorage.setItem('works', JSON.stringify(list));
+  }
+
+  render() {
+    return(
+     <div>
+        <h2>List</h2>
+        <input type="text" placeholder="Писать тут" ref="title" />
+        <input type="button" value="Добавить" onClick={this.add.bind(this)} />
+
         <ul>
-        {
-          this.state.todos.map((todo) => {
-            return <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo} />
-          })
-        }
+            {this.state.works.map(function(work, index){
+                return (
+                  <li key={index}>{work} <input type="button" value="Удалить" onClick={this.delete.bind(this)} data-key={index} /></li>
+                );
+            }, this)}
         </ul>
-      </div>
-    );
+     </div>
+    )
   }
 }
