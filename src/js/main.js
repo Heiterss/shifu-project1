@@ -1,62 +1,41 @@
-import React from 'react';
-import { render } from 'react-dom';
-import ReactDOM from 'react-dom';
-import Header from '../components/header';
-import TodoInput from '../components/listinput';
-import TodoItem from '../components/todoitem';
+import React, { Component } from 'react';
+import ReactDOM, { render } from 'react-dom';
+import { BrowserRouter, Route, Link, Router } from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
+import App from './app';
 
-class Root extends React.Component {
+const history = createBrowserHistory();
 
-  constructor(props) {
-    super(props);
+const Home = () => (
+  <div>
+   <h1>Main Page</h1>
+  </div>
+);
 
-    this.state= {
-      todos: [
-        {id: 0, text: "Something!"},
-        {id: 1, text: "Something!"},
-        {id: 3, text: "Something!"},
-        {id: 4, text: "Something!"},
-        {id: 5, text: "Something!"},
-        {id: 6, text: "Something!"},
-        {id: 7, text: "Something!"},
-        {id: 8, text: "Something!"},
-        {id: 9, text: "Something!"}
-      ],
-      nextId: 10
-    }
+const Admin = () => (
+  <div>
+   <App />
+  </div>
+)
 
-    this.addTodo = this.addTodo.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
-  }
-
-addTodo(todoText) {
-  let todos = this.state.todos.slice();
-  todos.push({id: this.state.nextId, text: todoText});
-  this.setState({
-    todos: todos,
-    nextId: ++this.state.nextId
-  })
-}
-
-removeTodo(id) {
-  this.setState({
-    todos: this.state.todos.filter((todo, index) => todo.id !== id)
-  })
-}
-render() {
+class Root extends Component {
+  render() {
     return (
-      <div>
-        <Header />
-        <TodoInput todoText="" addTodo={this.addTodo}/>
+      <BrowserRouter history={history}>
+        <div>
         <ul>
-        {
-          this.state.todos.map((todo) => {
-            return <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo} />
-          })
-        }
+        <li><Link to="/">Main</Link></li>
+        <li><Link to="/admin">List</Link></li>
         </ul>
-      </div>
-    );
+
+        <hr/>
+
+
+           <Route exact path="/" component={Home} />
+           <Route path="/admin" component={Admin} />
+        </div>
+      </BrowserRouter>
+    )
   }
 }
 render(<Root />, document.getElementById('root'));

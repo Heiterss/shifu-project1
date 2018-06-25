@@ -18,7 +18,7 @@ export default class TodoInput extends React.Component {
 addTodo(todo) {
   if (todo.lenght > 0) {
     this.props.addTodo(todo);
-    this.setState({value: ''});
+    this.setState({value: ' '});
   }
 
 }
@@ -26,8 +26,7 @@ addTodo(todo) {
   render() {
     return (
       <div>
-       <input type="text" value={this.state.value} onChange={this.handleChange} />
-       <button onClick={() => this.addTodo(this.state.value)}>Submit</button>
+       
       </div>
     )
   }
