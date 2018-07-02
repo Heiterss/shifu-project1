@@ -31,7 +31,7 @@ export default class App extends Component {
         <ul>
             {this.state.works.map(function(work, index){
                 return (
-                  <li className='list-group-item list-group-item-action list-group-item-info' key={index}>{work}<input type="button" className='btn btn-danger' value="Удалить" onClick={this.delete.bind(this)} data-key={index} /></li>
+                  <li key={index}>{work}<input type="button" className='btn btn-danger' value="Удалить" onClick={this.delete.bind(this)} data-key={index} /></li>
                 );
             }, this)}
         </ul>

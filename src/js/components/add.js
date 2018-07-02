@@ -7,18 +7,7 @@ export default class Add extends Component {
 
     var title = this.refs.title.value;
     if(localStorage.getItem('works') == null) {
-      var works= [
-         'Something',
-         'Something',
-         'Something',
-         'Something',
-         'Something',
-         'Something',
-         'Something',
-         'Something',
-         'Something',
-         'Something'
-       ]
+      var works= []
       works.push(title);
       localStorage.setItem('works', JSON.stringify(works));
     } else {
